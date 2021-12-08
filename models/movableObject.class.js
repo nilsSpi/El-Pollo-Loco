@@ -1,6 +1,7 @@
 class MovableObject {
     x=120;
     y=300;
+    speed=0.15;
     img;
     imgCache={};
     height=150;
@@ -28,7 +29,10 @@ class MovableObject {
         console.log('Moving right!');
     }
 
-    moveLeft(){
-        
-    }
+    moveLeft()
+   {
+    setInterval(() => {
+        this.x-=this.speed;
+    }, 1000/60);
+   }
 }
