@@ -6,6 +6,7 @@ class MovableObject {
     imgCache={};
     height=150;
     width=100;
+    otherDirection=false;
 
     loadImage(path){
         this.img= new Image();
