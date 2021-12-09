@@ -1,6 +1,8 @@
 class Chicken extends MovableObject {
   y=350;
   height=110;
+  charger=false;
+  timeOut=0;
 
   currentImg=0;
   IMAGES_WALKING=[
@@ -14,6 +16,11 @@ class Chicken extends MovableObject {
       this.x=200+ Math.random()*500;
       this.speed=0.15+Math.random()*0.5;
       this.loadImages(this.IMAGES_WALKING);
+      if(Math.random()<0.5)
+      {
+        this.charger=true;
+      }
+      this.charge();
       this.animate();
   }
 
@@ -25,9 +32,27 @@ class Chicken extends MovableObject {
           let path= this.IMAGES_WALKING[index];
           this.img=this.imgCache[path];
            this.currentImg++;
+           // impl charger mob
+           if(Math.random()<0.5 && this.charger )
+      {
+        this.speed=-0.1;
+        this.timeOut++;
+        if(this.timeOut>20)
+        {
+          this.speed=4;
           
+        }
+      }
              
       }, 100);
       
+  }
+
+  charge()
+  {
+   if (this.charger){
+     this.speed=1+Math.random()*0.5;
+     this.height*=1.3;
+   }
   }
 }
