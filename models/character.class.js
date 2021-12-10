@@ -22,7 +22,7 @@ class Character extends MovableObject{
     {
         // move right if arrow right is pressed
         setInterval(() => {
-            if (this.world.keyboard.RIGHT)
+            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x)
             {
                 this.x+=this.speed;
                 this.otherDirection=false;
@@ -30,12 +30,12 @@ class Character extends MovableObject{
         }, 1000/60);
         // move left if arrow left is pressed
         setInterval(() => {
-            if (this.world.keyboard.LEFT)
+            if (this.world.keyboard.LEFT && this.x>0)
             {
                 this.x-=this.speed;
                 this.otherDirection=true;
             }
-            this.world.camera_x= -this.x;
+            this.world.camera_x= -this.x+100;
         }, 1000/60);
 
         setInterval(() => {
