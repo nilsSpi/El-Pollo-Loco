@@ -15,7 +15,7 @@ level=level1;
 this.ctx=canvas.getContext('2d');
 this.canvas=canvas;
 this.keyboard=keyboard;
-this.draw();
+this.drawCanvas();
 this.setWorld();
     }
  
@@ -24,7 +24,7 @@ this.setWorld();
         this.character.world= this;
     }
 
-    draw(){
+    drawCanvas(){
         this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
        this.ctx.translate(this.camera_x,0);
 
@@ -35,7 +35,7 @@ this.addToMap(this.character);
 this.ctx.translate(-this.camera_x,0);
 
 let self=this;
-requestAnimationFrame( function (){self.draw();})
+requestAnimationFrame( function (){self.drawCanvas();})
 }
 
 addArrayToMap(array)
@@ -49,17 +49,30 @@ array.forEach(object=>{
     {
         if(object.otherDirection)
         {
-            this.ctx.save();
-            this.ctx.translate(object.width,0);
-            this.ctx.scale(-1,1);
-            object.x=object.x*-1;
+           this.flipImage(object);
         }
-        this.ctx.drawImage(object.img,object.x,object.y,object.width,object.height);
+        object.draw(this.ctx);
+
+        object.showHitbox(this.ctx);
+
         if (object.otherDirection)
         {
-            object.x=object.x*-1;
-            this.ctx.restore();
+           this.flipImageBack(object);
         }
+    }
+
+    flipImage(object)
+    {
+        this.ctx.save();
+        this.ctx.translate(object.width,0);
+        this.ctx.scale(-1,1);
+        object.x=object.x*-1;
+    }
+
+    flipImageBack(object)
+    {
+        object.x=object.x*-1;
+        this.ctx.restore();
     }
 
     
