@@ -2,6 +2,8 @@ class MovableObject {
     x=120;
     y=300;
     speed=0.15;
+    speedY=0;
+    acceleration=2.5;
     img;
     imgCache={};
     currentImg=0;
@@ -44,5 +46,22 @@ class MovableObject {
     let path= images[index];
     this.img=this.imgCache[path];
     this.currentImg++;
+   }
+
+   isAboveGround()
+   {
+       return this.y<180;
+   }
+
+   applyGravitation()
+   {
+       setInterval(() => {
+           if (this.isAboveGround())
+           {
+               this.y -= this.speedY;
+               this.speedY -= this.acceleration;
+           }
+           
+       }, 1000/25);
    }
 }
