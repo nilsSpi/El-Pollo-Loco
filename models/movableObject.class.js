@@ -4,6 +4,7 @@ class MovableObject {
     speed=0.15;
     speedY=0;
     acceleration=2.5;
+    jumpStrength=30;
     img;
     imgCache={};
     currentImg=0;
@@ -30,14 +31,15 @@ class MovableObject {
     }
 
      moveRight() {
-        console.log('Moving right!');
+        this.x+=this.speed;
+        this.otherDirection=false;
     }
 
     moveLeft()
    {
-    setInterval(() => {
         this.x-=this.speed;
-    }, 1000/60);
+        
+   
    }
 
    playAnimation(images)
@@ -53,15 +55,22 @@ class MovableObject {
        return this.y<180;
    }
 
+   
+
    applyGravitation()
    {
        setInterval(() => {
-           if (this.isAboveGround())
+           if (this.isAboveGround() || this.speedY>0)
            {
                this.y -= this.speedY;
                this.speedY -= this.acceleration;
            }
            
        }, 1000/25);
+   }
+
+   jump()
+   {
+    this.speedY=this.jumpStrength;
    }
 }
