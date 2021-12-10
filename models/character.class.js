@@ -44,10 +44,7 @@ class Character extends MovableObject{
             
             // Walk anmimation
             
-                let index=this.currentImg % this.IMAGES_WALKING.length;
-                let path= this.IMAGES_WALKING[index];
-                this.img=this.imgCache[path];
-                 this.currentImg++;
+              this.playAnimation(this.IMAGES_WALKING);
         }   
             }, 50);
        
