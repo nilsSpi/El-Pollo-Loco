@@ -17,12 +17,32 @@ this.canvas=canvas;
 this.keyboard=keyboard;
 this.drawCanvas();
 this.setWorld();
+this.checkCollisions();
     }
  
     setWorld()
     {
         this.character.world= this;
     }
+
+
+
+    /**
+     * checks every 20 ms for collision of any enemy with the character.
+     * 
+    */
+    checkCollisions() 
+    {
+        setInterval(() => {
+            this.level.enemies.forEach((enemy) => {
+                if (this.character.isColliding(enemy))
+                {
+                    console.log("character collison detected with", enemy);
+                }
+            });
+        }, 20);
+    }
+
 
     drawCanvas(){
         this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);

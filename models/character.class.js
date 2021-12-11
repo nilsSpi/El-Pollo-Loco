@@ -37,30 +37,28 @@ class Character extends MovableObject{
 
     animate()
     {
-        // move right if arrow right is pressed
+       // checks leagal and demanded characterMovment and up dates camera
         setInterval(() => {
 
-        
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x)
-            {
-               this.moveRight();
-            }
-        
-        // move left if arrow left is pressed
-       
-            if (this.world.keyboard.LEFT && this.x>0)
-            {
-                this.otherDirection=true;
-                this.moveLeft();
-                
-            }
-          
-        
             if (this.world.keyboard.SPACE && !this.isAboveGround())
-            {
+            { 
                 this.jump();
             }
 
+            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x)
+            {
+                this.otherDirection=false;
+                this.moveRight();
+            }
+            if (this.world.keyboard.LEFT && this.x>0)
+            {
+                this.otherDirection=true;
+                    this.moveLeft();
+                    
+            }
+
+
+       
           this.world.camera_x= -this.x+100;
 
             }, 1000/60);

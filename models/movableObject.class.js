@@ -27,8 +27,16 @@ class MovableObject {
             img.src=path;
             this.imgCache[path]=img;
         });
+
+
        
     }
+
+    /**
+     * 
+     * @param ctx -context variable , which is bounded to doc.getElebyId('canvas').getContext('2d')
+     * 
+     */
 
     draw(ctx)
     {
@@ -43,8 +51,6 @@ class MovableObject {
     moveLeft()
    {
         this.x-=this.speed;
-        
-   
    }
 
    playAnimation(images)
@@ -55,12 +61,18 @@ class MovableObject {
     this.currentImg++;
    }
 
+  
+
    isAboveGround()
    {
        return this.y<180;
    }
-
-   
+    
+   /**   gravity function via callback
+    *    checks 1000/25 if object is in air or speed in y direction is greater than zero   
+    *    if gravity is triggerd, the function updates y position of the object and than updates
+    *    the speed in y direction by the acceleration
+   */
 
    applyGravitation()
    {
@@ -74,6 +86,8 @@ class MovableObject {
        }, 1000/25);
    }
 
+  
+    // jump increases speed in y direction of this object by the jumpstrength
    jump()
    {
     this.speedY=this.jumpStrength;
@@ -81,11 +95,25 @@ class MovableObject {
 
    showHitbox(ctx)
    {
-       ctx.beginPath();
-       ctx.lineWidth='5';
-       ctx.strokeStyle="blue";
-       ctx.rect(this.x,this.y,this.width,this.height);
-       ctx.stroke();
+    if (this instanceof Character || this instanceof Chicken || this instanceof Endboss)
+    {
+        ctx.beginPath();
+        ctx.lineWidth='5';
+        ctx.strokeStyle="blue";
+        ctx.rect(this.x,this.y,this.width,this.height);
+        ctx.stroke();
+    }     
+   }
+
+   /**
+    * checks FOR an object if it is collding with parameter object
+    * i.e. charcater.isColliding(enemies[1])== false
+    * @param object - object it want to check if its colliding with this
+    */
+
+   isColliding(object)
+   {
+       return this.x+this.width > object.x && this.y+this.height > object.y && this.x < object.x && this.y < object.y + object.height;
    }
 
 }
