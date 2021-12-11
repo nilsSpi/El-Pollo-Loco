@@ -1,50 +1,24 @@
-class MovableObject {
-    x=120;
-    y=300;
+class MovableObject extends DrawableObject {
+   
     speed=0.15;
     speedY=0;
     acceleration=2.5;
     jumpStrength=30;
-    img;
-    imgCache={};
-    currentImg=0;
-    height=150;
-    width=100;
+   
     otherDirection=false;
     energy=100;
     dmg=1;
     lastHit=0;
 
-    loadImage(path){
-        this.img= new Image();
-        this.img.src= path;
-    }
-    /** 
-    * animate character movement
-    *@param {Array} arr -["img1.png,img2.png,..."]
-    */
-    loadImages(arr)
+   
+    playAnimation(images)
     {
-        arr.forEach(path=>{
-            let img=new Image();
-            img.src=path;
-            this.imgCache[path]=img;
-        });
-
-
-       
+     let index=this.currentImg % images.length;
+     let path= images[index];
+     this.img=this.imgCache[path];
+     this.currentImg++;
     }
-
-    /**
-     * 
-     * @param ctx -context variable , which is bounded to doc.getElebyId('canvas').getContext('2d')
-     * 
-     */
-
-    draw(ctx)
-    {
-        ctx.drawImage(this.img,this.x,this.y,this.width,this.height);
-    }
+  
 
      moveRight() {
         this.x+=this.speed;
@@ -55,16 +29,6 @@ class MovableObject {
    {
         this.x-=this.speed;
    }
-
-   playAnimation(images)
-   {
-    let index=this.currentImg % images.length;
-    let path= images[index];
-    this.img=this.imgCache[path];
-    this.currentImg++;
-   }
-
-  
 
    isAboveGround()
    {
