@@ -2,7 +2,7 @@ class MovableObject extends DrawableObject {
    
     speed=0.15;
     speedY=0;
-    acceleration=2.5;
+    acceleration=3;
     jumpStrength=30;
    
     otherDirection=false;
@@ -60,17 +60,7 @@ class MovableObject extends DrawableObject {
     this.speedY=this.jumpStrength;
    }
 
-   showHitbox(ctx)
-   {
-    if (this instanceof Character || this instanceof Chicken || this instanceof Endboss)
-    {
-        ctx.beginPath();
-        ctx.lineWidth='5';
-        ctx.strokeStyle="blue";
-        ctx.rect(this.x,this.y,this.width,this.height);
-        ctx.stroke();
-    }     
-   }
+  
 
    /**
     * checks FOR an object if it is collding with parameter object

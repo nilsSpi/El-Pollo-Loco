@@ -5,6 +5,7 @@ keyboard;
 camera_x=0;
 
 character= new Character();
+statusBar= new StatusBar();
 
 canvas;
 
@@ -27,23 +28,7 @@ this.checkCollisions();
 
 
 
-    /**
-     * checks every 20 ms for collision of any enemy with the character.
-     * if isColliding is true the character will take damage
-    */
-    checkCollisions() 
-    {
-        setInterval(() => {
-            this.level.enemies.forEach((enemy) => {
-                if (this.character.isColliding(enemy))
-                {
-                    this.character.takeDmg(enemy);
-                    console.log("character collison detected ", this.character.energy);
-                }
-            });
-        }, 10);
-    }
-
+  
 
     drawCanvas(){
         this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
@@ -54,6 +39,7 @@ this.addArrayToMap(this.level.clouds);
 this.addArrayToMap(this.level.enemies);
 this.addToMap(this.character);
 this.ctx.translate(-this.camera_x,0);
+this.addToMap(this.statusBar);
 
 let self=this;
 requestAnimationFrame( function (){self.drawCanvas();})
@@ -81,6 +67,25 @@ array.forEach(object=>{
            this.flipImageBack(object);
         }
     }
+
+      /**
+     * checks every 20 ms for collision of any enemy with the character.
+     * if isColliding is true the character will take damage
+    */
+       checkCollisions() 
+       {
+           setInterval(() => {
+               this.level.enemies.forEach((enemy) => {
+                   if (this.character.isColliding(enemy))
+                   {
+                       this.character.takeDmg(enemy);
+                       this.statusBar.setPercentage(this.character.energy);
+                       console.log("character collison detected ", this.character.energy);
+                   }
+               });
+           }, 10);
+       }
+   
 
     flipImage(object)
     {
