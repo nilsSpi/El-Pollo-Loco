@@ -11,6 +11,9 @@ class MovableObject {
     height=150;
     width=100;
     otherDirection=false;
+    energy=100;
+    dmg=1;
+    lastHit=0;
 
     loadImage(path){
         this.img= new Image();
@@ -55,7 +58,7 @@ class MovableObject {
 
    playAnimation(images)
    {
-    let index=this.currentImg % this.IMAGES_WALKING.length;
+    let index=this.currentImg % images.length;
     let path= images[index];
     this.img=this.imgCache[path];
     this.currentImg++;
@@ -107,13 +110,41 @@ class MovableObject {
 
    /**
     * checks FOR an object if it is collding with parameter object
-    * i.e. charcater.isColliding(enemies[1])== false
+    * i.e. charcater.isColliding(enemies[1]) = false
     * @param object - object it want to check if its colliding with this
     */
 
    isColliding(object)
    {
        return this.x+this.width > object.x && this.y+this.height > object.y && this.x < object.x && this.y < object.y + object.height;
+   }
+   /**  takeDmg
+    * represents this objected energy modified by the damage of enemy. if this is dead (<=0 energy) the energy will be set to 0.
+    * @param enemy - enemy
+   */
+   takeDmg(enemy)
+   {
+    this.energy -= enemy.dmg;
+    if (this.isDead(this)) { this.energy=0;}
+    else {
+        this.lastHit = new Date().getTime();
+    }
+   }
+
+   isDead(object)
+   {
+       return object.energy <= 0;
+   }
+
+   /**
+    * 
+    * @returns boolean , object was taken damage in last 0.5 sekcunds
+    */
+   isHurt()
+   {
+    let timepassed = (new Date().getTime() - this.lastHit)/1000; // difference in s
+    return timepassed < 0.5;
+
    }
 
 }

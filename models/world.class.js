@@ -29,7 +29,7 @@ this.checkCollisions();
 
     /**
      * checks every 20 ms for collision of any enemy with the character.
-     * 
+     * if isColliding is true the character will take damage
     */
     checkCollisions() 
     {
@@ -37,10 +37,11 @@ this.checkCollisions();
             this.level.enemies.forEach((enemy) => {
                 if (this.character.isColliding(enemy))
                 {
-                    console.log("character collison detected with", enemy);
+                    this.character.takeDmg(enemy);
+                    console.log("character collison detected ", this.character.energy);
                 }
             });
-        }, 20);
+        }, 10);
     }
 
 
