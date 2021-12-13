@@ -11,6 +11,7 @@ class World {
 
     level = level1;
     throwableObjects = [];
+    collectableObjects = [new CollectableObject()];
 
 
     constructor(canvas, keyboard) {
@@ -24,10 +25,15 @@ class World {
 
     setWorld() {
         this.character.world = this;
+        this.collectableObjects[0].world = this;
     }
 
 
-
+    /**
+     * 
+     * recursive function to add objects to the canvas. if the object should stay in the same place during the whole game 
+     * add it to map after the camera bakcflip.else add it to map in between the cameraflips.
+     */
 
 
     drawCanvas() {
@@ -38,6 +44,7 @@ class World {
         this.addArrayToMap(this.level.clouds);
         this.addArrayToMap(this.level.enemies);
         this.addToMap(this.character);
+        this.addArrayToMap(this.collectableObjects);
         this.addArrayToMap(this.throwableObjects);
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.statusBar);
@@ -70,16 +77,39 @@ class World {
 
             this.checkCollisions();
             this.checkThrowableObjects();
+            this.checkCollected();
 
-        },100);
+        }, 100);
     }
 
     checkThrowableObjects() {
-        if (this.keyboard.UP)
-        {
-            let bottle = new ThrowableObject(this.character.x +100,this.character.y+100);
+        if (this.keyboard.UP) {
+            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
         }
+    }
+
+
+    checkCollected() {
+
+
+        if (this.collectableObjects.length > 0) {
+
+
+            this.collectableObjects.forEach((object) => {
+
+
+                if (this.character.isColliding(object)) {
+                    console.log('got collected');
+                    let index;
+                    index = this.collectableObjects.indexOf(object);
+                    this.collectableObjects.splice(index, 1);
+                    console.log(this.collectableObjects);
+                }
+            });
+        }
+
+
     }
 
     /**
@@ -87,15 +117,15 @@ class World {
    * if isColliding is true the character will take damage
   */
     checkCollisions() {
-        
-            this.level.enemies.forEach((enemy) => {
-                if (this.character.isColliding(enemy)) {
-                    this.character.takeDmg(enemy);
-                    this.statusBar.setPercentage(this.character.energy);
-                    console.log("character collison detected ", this.character.energy);
-                }
-            });
-       
+
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy)) {
+                this.character.takeDmg(enemy);
+                this.statusBar.setPercentage(this.character.energy);
+                console.log("character collison detected ", this.character.energy);
+            }
+        });
+
     }
 
 
