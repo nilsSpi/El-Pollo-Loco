@@ -4,7 +4,9 @@ let world;
 let keyboard=new Keyboard();
 
 
-
+/**
+ * initialize game
+ */
 
 
 function init(){

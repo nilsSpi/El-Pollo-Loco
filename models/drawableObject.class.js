@@ -1,3 +1,7 @@
+
+/**
+ * object
+ */
 class DrawableObject 
 {
     x=120;

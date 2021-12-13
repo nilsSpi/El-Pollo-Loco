@@ -24,7 +24,10 @@ class StatusBar extends DrawableObject
     }
 
 
-
+/**
+ * sets this img to the right img from imgCache, corresponding to the percnetage of energy
+ * @param {int} percentage - the percentage of energy
+ */
 
     setPercentage(percentage)
     {
