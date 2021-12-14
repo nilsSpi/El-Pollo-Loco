@@ -36,11 +36,11 @@ class World {
     /**
      * 
      * @param {number} gameSections - The number of sections u want to divide ur game into 
-     * @returns a random number between 0 and levelend*gamesection/3
+     * @returns the length of the game section.
      */
-    randomizeCoinPosition(gameSections)
+    randomizeCoinPosition(gameSection)
     {
-        return this.level.level_end_x*gameSections/3;
+        return this.level.level_end_x*gameSection/3  ;
     }
 
 
