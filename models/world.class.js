@@ -11,13 +11,15 @@ class World {
 
     level = level1;
     throwableObjects = [];
-    collectableObjects = [new CollectableObject()];
+    collectableObjects = [new CollectableObject(this.randomizeCoinPosition(1)),new CollectableObject(this.randomizeCoinPosition(2)),new CollectableObject(this.randomizeCoinPosition(3))];
 
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
+
+        
         this.drawCanvas();
         this.setWorld();
         this.runIntervalWrap();
@@ -25,7 +27,20 @@ class World {
 
     setWorld() {
         this.character.world = this;
-        this.collectableObjects[0].world = this;
+        for (let index = 0; index < this.collectableObjects.length; index++) {
+            this.collectableObjects[index].world = this;
+            
+        }
+        
+    }
+    /**
+     * 
+     * @param {number} gameSections - The number of sections u want to divide ur game into 
+     * @returns a random number between 0 and levelend*gamesection/3
+     */
+    randomizeCoinPosition(gameSections)
+    {
+        return this.level.level_end_x*gameSections/3;
     }
 
 
