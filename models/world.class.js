@@ -11,7 +11,7 @@ class World {
 
     level = level1;
     throwableObjects = [];
-    collectableObjects = [new CollectableObject(this.randomizeCoinPosition(1)),new CollectableObject(this.randomizeCoinPosition(2)),new CollectableObject(this.randomizeCoinPosition(3))];
+    collectableObjects = [new CollectableObject(this.randomizeCoinPosition(1)), new CollectableObject(this.randomizeCoinPosition(2)), new CollectableObject(this.randomizeCoinPosition(3))];
 
 
     constructor(canvas, keyboard) {
@@ -19,7 +19,7 @@ class World {
         this.canvas = canvas;
         this.keyboard = keyboard;
 
-        
+
         this.drawCanvas();
         this.setWorld();
         this.runIntervalWrap();
@@ -29,18 +29,18 @@ class World {
         this.character.world = this;
         for (let index = 0; index < this.collectableObjects.length; index++) {
             this.collectableObjects[index].world = this;
-            
+
         }
-        
+
+
     }
     /**
      * 
      * @param {number} gameSections - The number of sections u want to divide ur game into 
      * @returns the length of the game section.
      */
-    randomizeCoinPosition(gameSection)
-    {
-        return this.level.level_end_x*gameSection/3  ;
+    randomizeCoinPosition(gameSection) {
+        return this.level.level_end_x * gameSection / 3;
     }
 
 
@@ -93,6 +93,7 @@ class World {
             this.checkCollisions();
             this.checkThrowableObjects();
             this.checkCollected();
+            this.checkExplosions()
 
         }, 100);
     }
@@ -100,6 +101,7 @@ class World {
     checkThrowableObjects() {
         if (this.keyboard.UP) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+
             this.throwableObjects.push(bottle);
         }
     }
@@ -141,6 +143,22 @@ class World {
             }
         });
 
+    }
+
+    checkExplosions() {
+        this.throwableObjects.forEach((object,index) => {
+            this.level.enemies.forEach((enemy) => {
+                if (enemy.isColliding(object)) {
+                    console.log("EXPLOSION");
+                    if (enemy instanceof Endboss) {
+                        enemy.energy -= 5;
+                        console.log("Endboss was hit!");
+                        //this.throwableObjects.splice(index,1);
+                        object.explode();
+                    }
+                }
+            })
+        });
     }
 
 

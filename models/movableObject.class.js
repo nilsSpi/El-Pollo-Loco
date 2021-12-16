@@ -7,7 +7,7 @@ class MovableObject extends DrawableObject {
    
     otherDirection=false;
     energy=100;
-    dmg=1;
+    dmg=3;
     lastHit=0;
 
    
