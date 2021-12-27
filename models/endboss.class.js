@@ -8,7 +8,12 @@ class Endboss extends MovableObject
     aggroRange=300;
     isAttacking=false;
     attackRange=200;
-    lastAttack=0;
+    startPosition=1200;
+    lastAttack;
+    attackCounter=3;
+    dmg=100;
+    
+   
 
     IMAGES_WALKING=[
         'img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/1.Caminata/G1.png',
@@ -59,34 +64,32 @@ class Endboss extends MovableObject
 
 
             setInterval(() => {
-          //      if(! this.isExhausted()){
+         
                     this.checkEndbossSight();
                     if(this.isAttacking){
-                        this.attack();
-                        this.lastAttack=new Date().getTime();
-           //         }
-                }
-              
-               
-            },1000/60)
+                        this.attack();                            
+                }          
+            },1000/60);
     }
 
     attack(){
 
-        if(!this.isExhausted()){
-            let currentX=this.x;
+       
+            
             this.aggroRange +=200;
-            this.speed=2;
-            if(currentX-this.x<this.attackRange){
+            this.speed=5;
+            if(this.x>this.startPosition-this.attackRange){
                 
                 this.moveLeft();
                
             }
-        }   
-
-        else{
-            this.speed=0;
-        }        
+           
+            if(!this.isExhausted() && this.attackCounter>0){
+                this.lastAttack=new Date().getTime();
+                this.startPosition=this.x;
+                this.attackCounter--;
+            }
+          
     }
 
     /**
@@ -103,7 +106,6 @@ class Endboss extends MovableObject
             this.isAttacking=false;
         }
     }
-
     /**
     * 
     * @returns boolean , object was taken damage in last 0.5 sekcunds
@@ -111,8 +113,7 @@ class Endboss extends MovableObject
    isExhausted()
    {
     let timepassed = (new Date().getTime() - this.lastAttack)/1000; // difference in s
-    return timepassed < 2;
+    return timepassed < 5;
 
    }
-   
 }
