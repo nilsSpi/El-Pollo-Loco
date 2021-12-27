@@ -3,9 +3,7 @@ class GoldChicken extends MovableObject {
 
     y = 350;
     height = 110;
-
     speed = 1;
-
 
     currentImg = 0;
     IMAGES_WALKING = [

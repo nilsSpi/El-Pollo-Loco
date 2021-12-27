@@ -31,6 +31,7 @@ class World {
             this.collectableObjects[index].world = this;
 
         }
+        this.level.enemies[4].world= this;
 
 
     }
@@ -93,10 +94,12 @@ class World {
             this.checkCollisions();
             this.checkThrowableObjects();
             this.checkCollected();
-            this.checkExplosions()
+            this.checkExplosions();
 
         }, 100);
     }
+
+
 
     checkThrowableObjects() {
         if (this.keyboard.UP) {

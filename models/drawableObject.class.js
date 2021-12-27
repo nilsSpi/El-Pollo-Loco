@@ -43,11 +43,19 @@ class DrawableObject {
     }
 
     showHitbox(ctx) {
-        if (this instanceof Character || this instanceof Chicken || this instanceof GoldChicken || this instanceof Endboss) {
+        if ( this instanceof Chicken || this instanceof GoldChicken || this instanceof Endboss) {
             ctx.beginPath();
             ctx.lineWidth = '5';
             ctx.strokeStyle = "blue";
             ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.stroke();
+        }
+
+        if(this instanceof Character){
+            ctx.beginPath();
+            ctx.lineWidth = '5';
+            ctx.strokeStyle = "blue";
+            ctx.rect(this.x, this.y+80, this.width, this.height-80);
             ctx.stroke();
         }
     }

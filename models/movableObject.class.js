@@ -74,6 +74,10 @@ class MovableObject extends DrawableObject {
 
    isColliding(object)
    {
+       if (this instanceof Character)
+       {
+           return this.x+this.width > object.x && this.y+this.height > object.y +80 && this.x < object.x && this.y +80 < object.y + object.height;
+       }
        return this.x+this.width > object.x && this.y+this.height > object.y && this.x < object.x && this.y < object.y + object.height;
    }
    /**  takeDmg
@@ -101,8 +105,10 @@ class MovableObject extends DrawableObject {
    isHurt()
    {
     let timepassed = (new Date().getTime() - this.lastHit)/1000; // difference in s
-    return timepassed < 0.5;
+    return timepassed < 0.3;
 
    }
+
+ 
 
 }

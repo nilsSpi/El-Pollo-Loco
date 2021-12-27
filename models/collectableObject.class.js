@@ -5,7 +5,7 @@ class CollectableObject extends DrawableObject {
     constructor(gameSectionPosition) {
         super().loadImage('img/8.Coin/Moneda2.png');
         //this.x = 550; //Math.floor(Math.random)*this.world.level.level_end_x;
-        this.y = 150;
+        this.y = 50;
         //this.setX();
         this.gameSectionPosition=gameSectionPosition;
         this.x=(Math.random())*this.gameSectionPosition;
