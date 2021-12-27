@@ -62,6 +62,7 @@ class World {
         this.addToMap(this.character);
         this.addArrayToMap(this.collectableObjects);
         this.addArrayToMap(this.throwableObjects);
+        this.addToMap(this.level.enemies[4].hpBar);
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.statusBar);
 

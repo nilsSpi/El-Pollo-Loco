@@ -12,6 +12,8 @@ class Endboss extends MovableObject
     lastAttack;
     attackCounter=3;
     dmg=100;
+    specialAttackCounter=1;
+    hpBar=new BossHp();
     
    
 
@@ -41,6 +43,12 @@ class Endboss extends MovableObject
         'img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/2.Ateción-ataque/2.Ataque/G19.png',
         'img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/2.Ateción-ataque/2.Ataque/G20.png'
     ];
+
+    IMAGES_ENRAGE = [
+        'img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/3.Herida/G21.png',
+        'img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/3.Herida/G22.png',
+        'img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/3.Herida/G23.png',
+    ];
     
 
     constructor()
@@ -48,13 +56,18 @@ class Endboss extends MovableObject
         super().loadImage('img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/1.Caminata/G1.png');
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_ATTACK);
+        this.loadImages(this.IMAGES_ENRAGE);
         this.x=1200;
+        this.updateHpBarPosition();
         this.animate(); 
     }
     animate()
     {   
             setInterval(() => {
-                if(this.isAttacking){
+                if(this.energy<60){
+                    this.playAnimation(this.IMAGES_ENRAGE);
+                }
+                else if(this.isAttacking){
                     this.playAnimation(this.IMAGES_ATTACK);
                 }
                 else{
@@ -64,11 +77,18 @@ class Endboss extends MovableObject
 
 
             setInterval(() => {
+
+                if(this.energy<60 && this.specialAttackCounter >0){
+                    this.spawnMobs();
+                    this.specialAttackCounter--;
+                }
          
                     this.checkEndbossSight();
                     if(this.isAttacking){
                         this.attack();                            
-                }          
+                }  
+                this.updateHpBarPosition();
+                this.hpBar.setBossPercentage(this.energy);        
             },1000/60);
     }
 
@@ -115,5 +135,19 @@ class Endboss extends MovableObject
     let timepassed = (new Date().getTime() - this.lastAttack)/1000; // difference in s
     return timepassed < 5;
 
+   }
+
+
+   updateHpBarPosition() {
+    this.hpBar.x=this.x;
+    this.hpBar.y=480-this.height-60;
+   }
+
+
+   spawnMobs() {
+       this.world.level.enemies.forEach(enemy => {
+           enemy.x = this.x;
+           enemy.speed*=2;
+       });
    }
 }
