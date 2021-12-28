@@ -5,7 +5,7 @@ class Endboss extends MovableObject
     width=250;
     y=55;
     energy=100;
-    aggroRange=300;
+    aggroRange=400;
     isAttacking=false;
     attackRange=200;
     startPosition=1200;
@@ -13,6 +13,7 @@ class Endboss extends MovableObject
     attackCounter=3;
     dmg=100;
     specialAttackCounter=1;
+    refreshAbilities=1;
     hpBar=new BossHp();
     
    
@@ -78,11 +79,16 @@ class Endboss extends MovableObject
 
             setInterval(() => {
 
-                if(this.energy<60 && this.specialAttackCounter >0){
+                if(this.energy<45 && this.specialAttackCounter >0){
                     this.spawnMobs();
                     this.specialAttackCounter--;
                 }
-         
+
+                if(this.energy<45 && this.specialAttackCounter<1 && this.refreshAbilities>0)
+                {
+                    this.attackCounter=this.attackCounter+2;
+                    this.refreshAbilities--;
+                }
                     this.checkEndbossSight();
                     if(this.isAttacking){
                         this.attack();                            
@@ -133,7 +139,7 @@ class Endboss extends MovableObject
    isExhausted()
    {
     let timepassed = (new Date().getTime() - this.lastAttack)/1000; // difference in s
-    return timepassed < 5;
+    return timepassed < 1.5;
 
    }
 
