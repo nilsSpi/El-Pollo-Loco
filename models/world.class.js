@@ -11,7 +11,9 @@ class World {
 
     level = level1;
     throwableObjects = [];
-    collectableObjects = [new CollectableObject(this.randomizeCoinPosition(1)), new CollectableObject(this.randomizeCoinPosition(2)), new CollectableObject(this.randomizeCoinPosition(3))];
+    collectableObjects = [new CollectableObject(this.randomizeCoinPosition(1)), new CollectableObject(this.randomizeCoinPosition(2)), new CollectableObject(this.randomizeCoinPosition(3)),
+        new CollectableObject(this.randomizeCoinPosition(1)), new CollectableObject(this.randomizeCoinPosition(2)), new CollectableObject(this.randomizeCoinPosition(3))
+    ];
 
 
     constructor(canvas, keyboard) {

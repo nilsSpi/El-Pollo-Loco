@@ -50,6 +50,12 @@ class Endboss extends MovableObject
         'img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/3.Herida/G22.png',
         'img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/3.Herida/G23.png',
     ];
+
+    IMAGES_DYING=[
+        'img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/4.Muerte/G24.png',
+        'img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/4.Muerte/G25.png',
+        'img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/4.Muerte/G26.png',
+    ];
     
 
     constructor()
@@ -58,22 +64,36 @@ class Endboss extends MovableObject
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_ENRAGE);
+        this.loadImages(this.IMAGES_DYING);
         this.x=1200;
+      
         this.updateHpBarPosition();
+        this.setPosition();
         this.animate(); 
     }
     animate()
     {   
             setInterval(() => {
-                if(this.energy<60){
-                    this.playAnimation(this.IMAGES_ENRAGE);
-                }
-                else if(this.isAttacking){
-                    this.playAnimation(this.IMAGES_ATTACK);
+                if(this.energy<=0){
+                    this.playAnimation(this.IMAGES_DYING);
+                    setTimeout(
+                        ()=>{this.x=-500;}
+                        ,2000);
                 }
                 else{
-                    this.playAnimation(this.IMAGES_WALKING);
-                }     
+                    if(this.energy<60){
+                        this.playAnimation(this.IMAGES_ENRAGE);
+                    }
+                    else if(this.isAttacking){
+                        this.playAnimation(this.IMAGES_ATTACK);
+                    }
+                    else{
+                        this.playAnimation(this.IMAGES_WALKING);
+                    }     
+
+                }
+
+               
             }, 200);  
 
 
@@ -155,5 +175,11 @@ class Endboss extends MovableObject
            enemy.x = this.x;
            enemy.speed*=2;
        });
+   }
+
+   setPosition() {
+       setTimeout(
+           () => {this.x=this.world.level.level_end_x;},1000
+       );
    }
 }
