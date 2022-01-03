@@ -84,7 +84,7 @@ class World {
         }
         object.draw(this.ctx);
 
-        object.showHitbox(this.ctx);
+     //   object.showHitbox(this.ctx);    !!!!!!!!!!!!!!!!HITBOXES!!!!!!!!!!!!
 
         if (object.otherDirection) {
             this.flipImageBack(object);
@@ -157,7 +157,7 @@ class World {
                 if (enemy.isColliding(object)) {
                     console.log("EXPLOSION");
                     if (enemy instanceof Endboss) {
-                        enemy.energy -= 5;
+                        enemy.energy -= 1;
                         console.log("Endboss was hit!");
                         //this.throwableObjects.splice(index,1);
                         object.explode();

@@ -13,9 +13,9 @@ class GoldChicken extends MovableObject {
     ];
 
 
-    constructor() {
+    constructor(xPosition) {
         super().loadImage('img/3.Secuencias_Enemy_básico/Versión_pollito/1.Paso_derecho.png');
-        this.x = 300 + Math.random() * 500;
+        this.x = xPosition + Math.random() * 500;
         this.loadImages(this.IMAGES_WALKING);
         this.hop();
         this.animate();

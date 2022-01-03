@@ -4,6 +4,7 @@ class ThrowableObject extends MovableObject
     
     speedX=20;
     exploded=false;
+    
 
 
 
