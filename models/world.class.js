@@ -1,6 +1,7 @@
 class World {
     ctx;
     keyboard;
+    backgroundSound = new Audio('audio/desertBackground.mp3');
 
     camera_x = 0;
 
@@ -67,6 +68,7 @@ class World {
         this.addToMap(this.level.enemies[4].hpBar);
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.statusBar);
+        this.backgroundSound.play();
 
         let self = this;
         requestAnimationFrame(function () { self.drawCanvas(); })
@@ -98,11 +100,24 @@ class World {
             this.checkThrowableObjects();
             this.checkCollected();
             this.checkExplosions();
+            this.checkAlarmCall();
 
         }, 100);
     }
 
+    /**
+     * ////////////////////WORKING HERE //////////////////
+     */
 
+    checkAlarmCall() {
+        this.level.enemies.forEach(enemy => {
+            if (enemy.x-this.character.x<800 && enemy.wasQuiet)
+            {
+                enemy.callAlarm();
+                
+            }
+        });
+    }
 
     checkThrowableObjects() {
         if (this.keyboard.UP) {

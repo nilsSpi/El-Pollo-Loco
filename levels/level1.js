@@ -1,20 +1,71 @@
 const level1=new Level(
     [
-        new Chicken(300),
-        new Chicken(300),
-        new Chicken(300),
-        new GoldChicken(400),
+        new Chicken(600),
+        new Chicken(600),
+        new Chicken(600),
+        new GoldChicken(700),
         new Endboss(),
+        new Chicken(1500),
+        new Chicken(1600),
+        new Chicken(1700),
+        new Chicken(3500),
+        new Chicken(3600),
+        new Chicken(3700),
+        new GoldChicken(1400),
+        new GoldChicken(2400),
+        new GoldChicken(3400),
+        new GoldChicken(4400),
+        new GoldChicken(5400),
         new Chicken(1100),
         new Chicken(1100),
         new Chicken(1100),
         new GoldChicken(1400),
+
+
+
+
+        new GoldChicken(7400),
+        new GoldChicken(7400),
+        new GoldChicken(7400),
+        new GoldChicken(7400),
+        new GoldChicken(7400),
+        new Chicken(8100),
+        new Chicken(8100),
+        new Chicken(8100),
+        new GoldChicken(8400),
+
+
+        ////////////////////////////////
+
+
+        new GoldChicken(9400),
+        new GoldChicken(9400),
+        new GoldChicken(9400),
+        new GoldChicken(9400),
+        new GoldChicken(9400),
+        new Chicken(9100),
+        new Chicken(9100),
+        new Chicken(9100),
+        new GoldChicken(9400),
+
+        new GoldChicken(11400),
+        new GoldChicken(12400),
+        new GoldChicken(13400),
+        new GoldChicken(14400),
+        new GoldChicken(15400),
+        new Chicken(11100),
+        new Chicken(11100),
+        new Chicken(11100),
+        new GoldChicken(11400),
         
     
     
     ],
     [
-        new Cloud()
+        new Cloud(0),
+        new Cloud(2000),
+        new Cloud(3500),
+        new Cloud(6500),
     ],
     [
         new BackgroundObject('img/5.Fondo/Capas/5.cielo_1920-1080px.png',-1*719),

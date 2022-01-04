@@ -12,6 +12,9 @@ class GoldChicken extends MovableObject {
         'img/3.Secuencias_Enemy_básico/Versión_pollito/3.Paso_izquierdo.png'
     ];
 
+    wasQuiet=true;
+  alarmCall=new Audio('audio/goldAlarm.mp3');
+
 
     constructor(xPosition) {
         super().loadImage('img/3.Secuencias_Enemy_básico/Versión_pollito/1.Paso_derecho.png');
@@ -53,5 +56,11 @@ class GoldChicken extends MovableObject {
 
         }, 1000 / 25);
 
+    }
+
+    callAlarm() {
+        this.wasQuiet=false;
+        this.alarmCall.play();
+    
     }
 }

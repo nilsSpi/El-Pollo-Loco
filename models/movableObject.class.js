@@ -9,8 +9,8 @@ class MovableObject extends DrawableObject {
     energy=100;
     dmg=8;
     lastHit=0;
-
    
+
     playAnimation(images)
     {
      let index=this.currentImg % images.length;

@@ -44,6 +44,10 @@ class Character extends MovableObject {
         'img/2.Secuencias_Personaje-Pepe-corrección/4.Herido/H-43.png',
     ];
 
+    walkingSound = new Audio('audio/walkingChar.mp3');
+    jumpSound = new Audio('audio/jump.mp3');
+    
+
 
 
     currentImg = 0;
@@ -61,17 +65,23 @@ class Character extends MovableObject {
         // checks leagal and demanded characterMovment and updates cameraposition
         setInterval(() => {
 
+            this.walkingSound.pause();
+           // this.jumpSound.pause();
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
+                
+                this.jumpSound.play();
             }
 
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.otherDirection = false;
                 this.moveRight();
+                this.walkingSound.play();
             }
             if (this.world.keyboard.LEFT && this.x > 0) {
                 this.otherDirection = true;
                 this.moveLeft();
+                this.walkingSound.play();
 
             }
             this.world.camera_x = -this.x + 100;
