@@ -3,7 +3,7 @@ class GoldChicken extends MovableObject {
 
     y = 350;
     height = 110;
-    speed = 1;
+    speed = 1+Math.random()*0.85;
 
     currentImg = 0;
     IMAGES_WALKING = [
@@ -20,6 +20,7 @@ class GoldChicken extends MovableObject {
         super().loadImage('img/3.Secuencias_Enemy_básico/Versión_pollito/1.Paso_derecho.png');
         this.x = xPosition + Math.random() * 500;
         this.loadImages(this.IMAGES_WALKING);
+        this.hasSuperHop();
         this.hop();
         this.animate();
     }
@@ -51,11 +52,22 @@ class GoldChicken extends MovableObject {
                 this.speedY -= this.acceleration;
             }
             else {
-                this.speedY = 20;
+                if(!this.hasSuperHop()){
+                    this.speedY = 20;
+                    this.speed = 2+Math.random()*0.85;
+                }
+                else{
+                    this.speedY = 20+5*Math.random();
+                }
+                
             }
 
         }, 1000 / 25);
 
+    }
+
+    hasSuperHop() {
+      return Math.random()<0.3;
     }
 
     callAlarm() {

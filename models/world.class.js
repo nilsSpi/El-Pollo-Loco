@@ -2,11 +2,17 @@ class World {
     ctx;
     keyboard;
     backgroundSound = new Audio('audio/desertBackground.mp3');
+    coinSound= new Audio('audio/coin.mp3');
 
     camera_x = 0;
-
+  
+    startScreen = new StartScreen();
     character = new Character();
     statusBar = new StatusBar();
+    endScreen = new EndScreen();
+    gameWon=false;
+    gameLost=false;
+    gameIsRunning=true;
 
     canvas;
 
@@ -21,11 +27,12 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
-
-
+  
+        this.setWorld();  
         this.drawCanvas();
-        this.setWorld();
         this.runIntervalWrap();
+       
+       
     }
 
     setWorld() {
@@ -56,23 +63,54 @@ class World {
 
 
     drawCanvas() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.ctx.translate(this.camera_x, 0);
 
-        this.addArrayToMap(this.level.backgroundObjects);
-        this.addArrayToMap(this.level.clouds);
-        this.addArrayToMap(this.level.enemies);
-        this.addToMap(this.character);
-        this.addArrayToMap(this.collectableObjects);
-        this.addArrayToMap(this.throwableObjects);
-        this.addToMap(this.level.enemies[4].hpBar);
-        this.ctx.translate(-this.camera_x, 0);
-        this.addToMap(this.statusBar);
-        this.backgroundSound.play();
+            if(this.gameLost){
+                this.addArrayToMap(this.level.backgroundObjects);
+                this.addArrayToMap(this.level.clouds);
+               this.endScreen.determinStatus(this.gameLost,this.gameWon);
+               this.addToMap(this.endScreen);
+            }
+    
+            else if (this.gameWon){
+                this.addArrayToMap(this.level.backgroundObjects);
+                this.addArrayToMap(this.level.clouds);
+               this.endScreen.determinStatus(this.gameLost,this.gameWon);
+               this.addToMap(this.endScreen);
+               
+            }
 
-        let self = this;
-        requestAnimationFrame(function () { self.drawCanvas(); })
+            else  if(!this.gameIsRunning){
+                console.log(this.startScreen.img.path);
+                this.startScreen.loadImage('img/9.Intro _ Outro Image/Start Screen/Opción 1.png');
+
+                this.addToMap(this.startScreen);
+                this.startScreen.draw(this.ctx);
+                
+            }
+    
+            else {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                this.ctx.translate(this.camera_x, 0);
+        
+                this.addArrayToMap(this.level.backgroundObjects);
+                this.addArrayToMap(this.level.clouds);
+                this.addArrayToMap(this.level.enemies);
+                this.addToMap(this.character);
+                this.addArrayToMap(this.collectableObjects);
+                this.addArrayToMap(this.throwableObjects);
+                this.addToMap(this.level.enemies[4].hpBar);
+                this.ctx.translate(-this.camera_x, 0);
+                this.addToMap(this.statusBar);
+                this.backgroundSound.play();
+        
+               // let self = this;
+               // requestAnimationFrame(function () { self.drawCanvas(); })
+            } 
+            let self = this;
+            requestAnimationFrame(function () { self.drawCanvas(); })
+       
     }
+
 
     addArrayToMap(array) {
         array.forEach(object => {
@@ -106,12 +144,12 @@ class World {
     }
 
     /**
-     * ////////////////////WORKING HERE //////////////////
+     * checks if an enemy is near to the character and if the enemy already called alram
      */
 
     checkAlarmCall() {
         this.level.enemies.forEach(enemy => {
-            if (enemy.x-this.character.x<800 && enemy.wasQuiet)
+            if (enemy.x-this.character.x<800 && enemy.wasQuiet && !this.gameLost && this.gameIsRunning)
             {
                 enemy.callAlarm();
                 
@@ -138,7 +176,7 @@ class World {
 
 
                 if (this.character.isColliding(object)) {
-                    console.log('got collected');
+                    this.coinSound.play();
                     let index;
                     index = this.collectableObjects.indexOf(object);
                     this.collectableObjects.splice(index, 1);

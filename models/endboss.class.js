@@ -10,11 +10,12 @@ class Endboss extends MovableObject
     attackRange=200;
     startPosition=1200;
     lastAttack;
-    attackCounter=3;
+    attackCounter=5;
     dmg=100;
     specialAttackCounter=1;
     refreshAbilities=1;
     hpBar=new BossHp();
+    timeOfCreation;
     
    
 
@@ -66,6 +67,7 @@ class Endboss extends MovableObject
         this.loadImages(this.IMAGES_ENRAGE);
         this.loadImages(this.IMAGES_DYING);
         this.x=1200;
+        this.timeOfCreation=new Date().getTime();
       
         this.updateHpBarPosition();
         this.setPosition();
@@ -142,7 +144,8 @@ class Endboss extends MovableObject
  * working
  */
      checkEndbossSight() {
-        if(this.x-this.world.character.x < this.aggroRange)
+        let timer = new Date().getTime();
+        if(this.timeOfCreation+1000<timer && this.x-this.world.character.x < this.aggroRange)
         {
             console.log("in sight");
             this.isAttacking=true;
@@ -171,9 +174,14 @@ class Endboss extends MovableObject
 
 
    spawnMobs() {
-       this.world.level.enemies.forEach(enemy => {
-           enemy.x = this.x;
-           enemy.speed*=2;
+       this.world.level.enemies.forEach((enemy,index) => {
+           if(index<this.world.level.enemies.length/2){
+            enemy.x = this.x;
+            enemy.speed*=2;
+            if(enemy instanceof GoldChicken)
+            {enemy.speed=1;}
+           }
+          
        });
    }
 

@@ -66,6 +66,9 @@ class Character extends MovableObject {
         setInterval(() => {
 
             this.walkingSound.pause();
+            if(this.x>=this.world.level.level_end_x-20){
+                this.world.gameWon=true;
+            }
            // this.jumpSound.pause();
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
@@ -96,6 +99,7 @@ class Character extends MovableObject {
         setInterval(() => {
             if (this.isDead(this)) {
                 this.playAnimation(this.IMAGES_DEAD);
+                this.world.gameLost=true;
             }
 
             else if (this.isHurt()) {

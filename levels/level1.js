@@ -1,9 +1,9 @@
 const level1=new Level(
     [
-        new Chicken(600),
-        new Chicken(600),
-        new Chicken(600),
-        new GoldChicken(700),
+        new Chicken(800),
+        new Chicken(800),
+        new Chicken(800),
+        new GoldChicken(900),
         new Endboss(),
         new Chicken(1500),
         new Chicken(1600),
@@ -16,9 +16,9 @@ const level1=new Level(
         new GoldChicken(3400),
         new GoldChicken(4400),
         new GoldChicken(5400),
-        new Chicken(1100),
-        new Chicken(1100),
-        new Chicken(1100),
+        new Chicken(1900),
+        new Chicken(1900),
+        new Chicken(1900),
         new GoldChicken(1400),
 
 
