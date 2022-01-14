@@ -21,6 +21,7 @@ console.log('my character is',world.character);
 }
 
 
+
 window.addEventListener("keydown",(event)=>{
     if(event.keyCode==39){
         keyboard.RIGHT=true;

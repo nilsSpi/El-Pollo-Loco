@@ -3,8 +3,9 @@ class Chicken extends MovableObject {
   height = 110;
   charger = false;
   enrage = 0;
-
+  world;
   currentImg = 0;
+  timeOfCreation;
   IMAGES_WALKING = [
     'img/3.Secuencias_Enemy_básico/Versión_Gallinita (estas salen por orden de la gallina gigantona)/1.Ga_paso_derecho.png',
     'img/3.Secuencias_Enemy_básico/Versión_Gallinita (estas salen por orden de la gallina gigantona)/2-Ga_centro.png',
@@ -21,6 +22,7 @@ class Chicken extends MovableObject {
     super().loadImage('img/3.Secuencias_Enemy_básico/Versión_Gallinita (estas salen por orden de la gallina gigantona)/1.Ga_paso_derecho.png');
     this.x = xPosition + Math.random() * 500;
     this.isMob = true;
+    this.timeOfCreation=new Date().getTime();
     
     this.speed = 0.55 + Math.random() * 0.85;
     this.loadImages(this.IMAGES_WALKING);
@@ -34,25 +36,36 @@ class Chicken extends MovableObject {
 
   animate() {
 
-    setInterval(() => {
-      this.moveLeft();
-    }, 1000 / 60);
-
-    setInterval(() => {
-
-      this.playAnimation(this.IMAGES_WALKING);
-
-      // impl charger mob
-      if (Math.random() < 0.4 && this.charger) {
-        this.speed = -0.1;
-        this.enrage++;
-        if (this.enrage > 20) {
-          this.speed = 4;
-
+    
+      setInterval(() => {
+        let timer=new Date().getTime();
+        if(this.timeOfCreation+2000<timer && this.world.gameIsRunning && this.world ){
+          this.moveLeft();
         }
-      }
+       
+      }, 1000 / 60);
+  
+      setInterval(() => {
+        let timer=new Date().getTime();
+        if(this.timeOfCreation+2000<timer && this.world.gameIsRunning && this.world ){
 
-    }, 100);
+          this.playAnimation(this.IMAGES_WALKING);
+  
+          // impl charger mob
+          if (Math.random() < 0.4 && this.charger) {
+            this.speed = -0.1;
+            this.enrage++;
+            if (this.enrage > 20) {
+              this.speed = 4;
+    
+            }
+          }
+        }
+
+       
+  
+      }, 100);
+     
 
   }
 

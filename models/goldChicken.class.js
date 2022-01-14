@@ -1,9 +1,10 @@
 class GoldChicken extends MovableObject {
 
-
+    world;
     y = 350;
     height = 110;
     speed = 1+Math.random()*0.85;
+    timeOfCreation;
 
     currentImg = 0;
     IMAGES_WALKING = [
@@ -20,6 +21,7 @@ class GoldChicken extends MovableObject {
         super().loadImage('img/3.Secuencias_Enemy_básico/Versión_pollito/1.Paso_derecho.png');
         this.x = xPosition + Math.random() * 500;
         this.loadImages(this.IMAGES_WALKING);
+        this.timeOfCreation=new Date().getTime();
         this.hasSuperHop();
         this.hop();
         this.animate();
@@ -27,40 +29,50 @@ class GoldChicken extends MovableObject {
 
     animate() {
 
-        setInterval(() => {
-            this.moveLeft();
-        }, 1000 / 60);
+            setInterval(() => {
+                let timer=new Date().getTime();
+                if(this.timeOfCreation+2000<timer && this.world.gameIsRunning && this.world){
+                    this.moveLeft();
+                }
+               
+            }, 1000 / 60);
+    
+            setInterval(() => {
+                let timer=new Date().getTime();
+                if (this.timeOfCreation+2000<timer && this.world.gameIsRunning && this.world){
+                    this.playAnimation(this.IMAGES_WALKING);
+                }
+               
+    
+            }, 100);
 
-        setInterval(() => {
-
-            this.playAnimation(this.IMAGES_WALKING);
-
-
-
-        }, 100);
-
+       
     }
 
 
     hop() {
 
         setInterval(() => {
+            let timer=new Date().getTime();
+            if(this.timeOfCreation+2000<timer && this.world.gameIsRunning && this.world){
+                if (this.y < 350 || this.speedY > 0) {
 
-            if (this.y < 350 || this.speedY > 0) {
+                    this.y -= this.speedY;
+                    this.speedY -= this.acceleration;
+                }
+                else {
+                    if(!this.hasSuperHop()){
+                        this.speedY = 20;
+                        this.speed = 2+Math.random()*0.85;
+                    }
+                    else{
+                        this.speedY = 20+5*Math.random();
+                    }
+                    
+                }
+            }
 
-                this.y -= this.speedY;
-                this.speedY -= this.acceleration;
-            }
-            else {
-                if(!this.hasSuperHop()){
-                    this.speedY = 20;
-                    this.speed = 2+Math.random()*0.85;
-                }
-                else{
-                    this.speedY = 20+5*Math.random();
-                }
-                
-            }
+           
 
         }, 1000 / 25);
 

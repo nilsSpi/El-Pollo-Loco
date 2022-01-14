@@ -12,7 +12,7 @@ class World {
     endScreen = new EndScreen();
     gameWon=false;
     gameLost=false;
-    gameIsRunning=true;
+    gameIsRunning=false;
 
     canvas;
 
@@ -39,9 +39,10 @@ class World {
         this.character.world = this;
         for (let index = 0; index < this.collectableObjects.length; index++) {
             this.collectableObjects[index].world = this;
-
         }
+        this.level.enemies.forEach(enemy => {enemy.world = this;});
         this.level.enemies[4].world= this;
+        this.startScreen.world=this;
 
 
     }
